@@ -20,7 +20,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ paddingTop: "60px" }}>
       <h1>Juegos mejor valorados</h1>
       <ul>
         {games.map((game) => (
