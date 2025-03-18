@@ -31,9 +31,9 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <form className="d-flex" role="search" onSubmit={handleSearch}>
+          <form className="d-flex w-100" role="search" onSubmit={handleSearch}>
             <input
-              className="form-control me-2"
+              className="form-control flex-grow-1 me-2"
               type="search"
               placeholder="Buscar juegos"
               aria-label="Search"
