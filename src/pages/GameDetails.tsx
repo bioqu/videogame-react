@@ -62,7 +62,7 @@ const GameDetails = () => {
           </p>
           <p>
             <strong>Géneros:</strong>{" "}
-            {game.genres?.map((g) => g.name).join(", ")}
+            {game.genres?.map((g: { name: any }) => g.name).join(", ")}
           </p>
           <p
             className="game-description"
