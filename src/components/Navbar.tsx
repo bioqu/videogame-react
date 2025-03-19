@@ -1,9 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useState } from "react";
+import { useTheme } from "../context/theme-context"; // Importar el hook del tema
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { theme, toggleTheme } = useTheme(); // Obtener el tema y la función para cambiarlo
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -12,12 +14,15 @@ const Navbar = () => {
 
   return (
     <nav
-      className="navbar navbar-expand-lg bg-dark fixed-top"
-      data-bs-theme="dark"
+      className="navbar navbar-expand-lg fixed-top"
+      style={{
+        backgroundColor: theme === "light" ? "#f8f9fa" : "#212529", // Fondo claro/oscuro
+        color: theme === "light" ? "#000" : "#fff", // Texto claro/oscuro
+      }}
     >
       <div className="container-sm">
         <a className="navbar-brand text-primary" href="#">
-          Home
+          Inicio
         </a>
         <button
           className="navbar-toggler"
@@ -80,6 +85,24 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
+          </div>
+          {/* Botón de cambio de tema */}
+          <div className="form-check form-switch ms-3">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="themeToggle"
+              checked={theme === "dark"} // Cambiar el estado del toggle según el tema
+              onChange={toggleTheme} // Cambiar el tema al hacer clic
+            />
+            <label
+              className={`form-check-label ${
+                theme === "light" ? "text-dark" : "text-light"
+              }`}
+              htmlFor="themeToggle"
+            >
+              <p className="text-primary"> Modo Oscuro </p>
+            </label>
           </div>
         </div>
       </div>

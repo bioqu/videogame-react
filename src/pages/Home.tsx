@@ -6,8 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link } from "react-router-dom";
 import "../App.css"; // Importa el archivo CSS
+import React, { useContext } from "react";
+import { useTheme } from "../context/theme-context"; // Ajusta la ruta según tu estructura
 
 const Home = () => {
+  const { theme, toggleTheme } = useTheme();
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +36,7 @@ const Home = () => {
     fetchGames();
   }, [page]); // Ejecutar efecto cuando cambie la página
 
+  // Mensaje de carga de web
   if (loading)
     return (
       <p className="text-center mt-5" style={{ paddingTop: "60px" }}>
@@ -47,8 +51,20 @@ const Home = () => {
     );
 
   return (
-    <div style={{ paddingTop: "60px" }}>
-      <h1>Juegos mejor valorados</h1>
+    <div
+      style={{
+        paddingTop: "100px",
+        backgroundColor: theme === "light" ? "#fff" : "#333",
+        color: theme === "light" ? "#000" : "#fff",
+        minHeight: "100vh",
+      }}
+    >
+      <h1 className="container">Videojuegos mejor valorados</h1>
+      {/* Se elimina boton modo oscuro de home */}
+      {/* <button onClick={toggleTheme}>
+        Cambiar a modo {theme === "light" ? "oscuro" : "claro"}
+      </button> */}
+      <br></br>
       <br></br>
       {/* Cuadrícula de Bootstrap */}
       <div className="container text-center">

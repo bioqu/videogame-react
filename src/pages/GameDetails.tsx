@@ -49,7 +49,7 @@ const GameDetails = () => {
           <img
             src={game.background_image || NoImagen}
             alt={game.name}
-            className="img-fluid game-image"
+            className="img-fluid game-image-details"
           />
         </div>
         <div className="col-md-6">
