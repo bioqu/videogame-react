@@ -21,7 +21,7 @@ const Navbar = () => {
       }}
     >
       <div className="container-sm">
-        <a className="navbar-brand text-primary" href="#">
+        <a className="navbar-brand text-primary" href="/">
           Inicio
         </a>
         <button
