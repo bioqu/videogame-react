@@ -1,5 +1,7 @@
-Video Game Explorer
-Video Game Explorer es una aplicación web que permite a los usuarios explorar y buscar videojuegos utilizando datos de la API de RAWG. La aplicación incluye funcionalidades como búsqueda, filtrado por género, plataforma, año, etiquetas (tags) y desarrolladores, así como un modo oscuro/claro para mejorar la experiencia del usuario.
+Video Game React
+Video Game es una aplicación web que permite a los usuarios explorar y buscar videojuegos utilizando datos de la API de RAWG. La aplicación incluye funcionalidades como búsqueda, filtrado por género, plataforma, año, etiquetas (tags) y desarrolladores, así como un modo oscuro/claro para mejorar la experiencia del usuario.
+
+La aplicación esta todavia en desarrrollo, por lo que espero que tengan paciencia.
 
 Características Principales
 Búsqueda de Juegos: Los usuarios pueden buscar juegos por nombre.
