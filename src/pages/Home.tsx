@@ -6,24 +6,34 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link } from "react-router-dom";
 import "../App.css"; // Importa el archivo CSS
-import React, { useContext } from "react";
 import { useTheme } from "../context/theme-context"; // Ajusta la ruta según tu estructura
 
-const Home = () => {
-  const { theme, toggleTheme } = useTheme();
-  const [games, setGames] = useState<Game[]>([]);
+interface HomeProps {
+  games: Game[];
+  setGames: (games: Game[]) => void;
+  page: number;
+  setPage: (page: number) => void;
+}
+
+const Home = ({ games, setGames, page, setPage }: HomeProps) => {
+  const { theme } = useTheme();
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState<number>(1); // Estado para la página actual
+  const [error, setError] = useState<string | null>(null); // Estado para la página actual
 
   useEffect(() => {
     const fetchGames = async () => {
       const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
       try {
         const response = await axios.get(
-          `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-metacritic&page=${page}` // Usar el parámetro page
+          `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-metacritic&page=${page}`
         );
-        setGames(response.data.results);
+
+        if (response.data.results && response.data.results.length > 0) {
+          setGames(response.data.results);
+        } else {
+          setGames([]); // No hay juegos, limpiar el estado
+          console.log("No se encontraron juegos para la página", page);
+        }
       } catch (error) {
         console.error("Error al obtener juegos", error);
         setError(
@@ -59,38 +69,34 @@ const Home = () => {
         minHeight: "100vh",
       }}
     >
-      <h1 className="container">Videojuegos mejor valorados</h1>
-      {/* Se elimina boton modo oscuro de home */}
-      {/* <button onClick={toggleTheme}>
-        Cambiar a modo {theme === "light" ? "oscuro" : "claro"}
-      </button> */}
-      <br></br>
-      <br></br>
-      {/* Cuadrícula de Bootstrap */}
+      <h1 className="container">Juegos</h1>
+      <br />
       <div className="container text-center">
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {games.map((game) => (
-            <div className="col" key={game.id}>
-              <Link
-                to={`/game/${game.id}`}
-                className="text-decoration-none text-dark"
-              >
-                <div className="card h-100 game-card">
-                  {" "}
-                  {/* Clases de Bootstrap + clase personalizada */}
-                  <img
-                    src={game.background_image || NoImagen}
-                    alt={game.name}
-                    className="game-image img-fluid mx-auto d-block"
-                  />
-                  <div className="card-body">
-                    <h3 className="card-title">{game.name}</h3>
-                    <p className="card-text">Puntuación: {game.metacritic}</p>
+          {games.length > 0 ? (
+            games.map((game) => (
+              <div className="col" key={game.id}>
+                <Link
+                  to={`/game/${game.id}`}
+                  className="text-decoration-none text-dark"
+                >
+                  <div className="card h-100 game-card">
+                    <img
+                      src={game.background_image || NoImagen}
+                      alt={game.name}
+                      className="game-image img-fluid mx-auto d-block"
+                    />
+                    <div className="card-body">
+                      <h3 className="card-title">{game.name}</h3>
+                      <p className="card-text">Puntuación: {game.metacritic}</p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          ))}
+                </Link>
+              </div>
+            ))
+          ) : (
+            <p>No hay juegos disponibles.</p>
+          )}
         </div>
       </div>
       {/* Botones de paginación */}

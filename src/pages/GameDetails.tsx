@@ -13,6 +13,7 @@ const GameDetails = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  //Mensaje de error al no encontrar detalles de juegos
   useEffect(() => {
     const fetchGame = async () => {
       if (id) {
@@ -30,6 +31,7 @@ const GameDetails = () => {
     fetchGame();
   }, [id]);
 
+  // Mensaje de carga de web
   if (loading)
     return (
       <p className="text-center mt-5" style={{ paddingTop: "60px" }}>
@@ -46,7 +48,6 @@ const GameDetails = () => {
 
   return (
     <div
-      className="container mt-5"
       style={{
         paddingTop: "100px",
         backgroundColor: theme === "light" ? "#fff" : "#333",
@@ -57,6 +58,7 @@ const GameDetails = () => {
       <div className="row">
         <div className="col-md-6">
           <img
+            style={{ paddingLeft: "80px" }}
             src={game.background_image || NoImagen}
             alt={game.name}
             className="img-fluid game-image-details"
@@ -64,16 +66,26 @@ const GameDetails = () => {
         </div>
         <div className="col-md-6">
           <h1 className="game-title">{game.name}</h1>
-          <p className="game-meta">
-            <strong>Puntuación:</strong> {game.metacritic || "N/A"}
-          </p>
-          <p>
-            <strong>Lanzamiento:</strong> {game.released || "Desconocido"}
-          </p>
-          <p>
-            <strong>Géneros:</strong>{" "}
-            {game.genres?.map((g: { name: any }) => g.name).join(", ")}
-          </p>
+          <div style={{ paddingLeft: "20px" }}>
+            <p className="game-meta">
+              <strong>Puntuación:</strong> {game.metacritic || "N/A"}
+            </p>
+            <p>
+              <strong>Lanzamiento:</strong> {game.released || "Desconocido"}
+            </p>
+            <p>
+              <strong>Géneros:</strong>{" "}
+              {game.genres?.map((g: { name: any }) => g.name).join(", ")}
+            </p>
+            <p>
+              <strong>Tags: </strong>{" "}
+              {game.tags.map((tag) => tag.name).join(", ")}
+            </p>
+            <p>
+              Desarrolladores:{" "}
+              {game.developers.map((dev) => dev.name).join(", ")}
+            </p>
+          </div>
           <p
             className="game-description"
             dangerouslySetInnerHTML={{
